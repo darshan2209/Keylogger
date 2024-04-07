@@ -1,5 +1,6 @@
 # Keylogger
 Keylogger using Python.
+***This is only for educational purposes.***
 
 This keylogger essentially tracks keyboard events, logging pressed keys to a file and providing basic feedback in the console. It stops listening for events when the Escape key is pressed.
 
